@@ -1,0 +1,71 @@
+*to create fast api env (note that name of file is fastapi-env):
+python -m venv fastapi-env
+
+to activate:
+.\fastapi-env\Scripts\Activate
+
+to install fastapi with uvicorn:
+pip install fastapi "uvicorn[standard]"
+
+*you can also install all dependencies:
+pip install fastapi[all]
+
+*open the virtual environment in vs code
+it automatially detects in powershell but you can add "source" before the command in gitbash
+
+*create main.py file
+
+*run uvicorn server:
+uvicorn main:app --reload
+
+*to run server while having a blog directory, run this in the parent directory:
+uvicorn blog.main:app --reload
+
+
+*to access swagger UI:
+localhost:8000/docs
+
+*to use redoc instead:
+localhost:8000/redoc
+
+*faster way to install requirements:
+-create requirements.txt file
+-pip install -r requirements.txt
+
+*Guidelines for using sqlalchemy to set up the database can be found on sqlalchemy docs and all other documentation including fastapi documentation
+
+*YOU CAN USE "Table Plus" software to test your databases locally
+
+*install python-jose to generate and verify jwt tokens in python
+--------------------------------------------------------------------
+
+
+Alembic is a database migration tool for SQLAlchemy. It lets you manage schema changes (like adding columns) without losing your data. Here’s how to set it up and use it in your FastAPI project:
+
+1. Install Alembic
+Activate your virtual environment and run:
+pip install alembic
+
+2. Initialize Alembic in your project
+In your project root (where main.py is), run:
+alembic init alembic
+
+This creates an alembic/ directory and an alembic.ini config file.
+
+3. Configure Alembic
+Open alembic.ini and set the sqlalchemy.url to your database URL (e.g., sqlite:///./blog.db).
+In alembic/env.py, import your models and set the target_metadata to your Base.metadata:
+from blog.models import Base
+target_metadata = Base.metadata
+
+4. Create a migration
+After updating your models, generate a migration script:
+alembic revision --autogenerate -m "add name column to users"
+
+Edit the generated script if needed.
+
+5. Apply the migration
+Run:
+alembic upgrade head
+
+This updates your database schema.
