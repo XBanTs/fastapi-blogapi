@@ -69,3 +69,5 @@ Run:
 alembic upgrade head
 
 This updates your database schema.
+
+postgresql://blog_database_2hbj_user:7jHBhWHQbhkRKl1BgwRMkNsu86tqnxhr@dpg-d2msonqdbo4c73f6v3r0-a/blog_database_2hbj
