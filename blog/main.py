@@ -19,13 +19,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create database tables
-models.Base.metadata.create_all(engine)
-
 # Include routers
 app.include_router(authentication.router)
 app.include_router(blog.router)
 app.include_router(user.router)
+
+@app.on_event("startup")
+async def startup_event():
+    # Create database tables only when the app starts, not during build
+    models.Base.metadata.create_all(engine)
 
 @app.get("/")
 def root():
@@ -34,16 +36,3 @@ def root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
-
-
-
-
-
-
-
-
-
-
-
-
-    
