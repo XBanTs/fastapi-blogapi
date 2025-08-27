@@ -13,7 +13,11 @@ class Settings:
         if self.DATABASE_URL:
             # Render provides DATABASE_URL, but we need to handle postgres:// vs postgresql://
             if self.DATABASE_URL.startswith("postgres://"):
-                return self.DATABASE_URL.replace("postgres://", "postgresql://", 1)
+                # Convert to postgresql+psycopg:// to use psycopg3
+                return self.DATABASE_URL.replace("postgres://", "postgresql+psycopg://", 1)
+            elif self.DATABASE_URL.startswith("postgresql://"):
+                # Convert to postgresql+psycopg:// to use psycopg3
+                return self.DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
             return self.DATABASE_URL
         # Fallback to SQLite for local development
         import os
